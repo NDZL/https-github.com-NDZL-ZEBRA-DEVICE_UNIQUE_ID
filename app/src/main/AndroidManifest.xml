@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.ndzl.uniqueids">
+
+    <queries>
+        <package android:name="com.symbol.emdk.emdkservice" />
+        <package android:name="com.zebra.zebracontentprovider" />
+    </queries>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.symbol.emdk.permission.EMDK" />
+    <uses-permission android:name="com.zebra.provider.READ"/>
+
+        <application
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme"
+            >
+            <uses-library
+                android:name="com.symbol.emdk"
+                android:required="false" />
+            <activity
+                android:name="com.ndzl.uniqueids.MainActivity"
+                android:label="@string/app_name"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                >
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+            </activity>
+            <service
+                android:name=".UniqueIDsService"
+                android:permission="android.permission.BIND_JOB_SERVICE"
+                android:exported="true"/>
+        </application>
+
+    </manifest>

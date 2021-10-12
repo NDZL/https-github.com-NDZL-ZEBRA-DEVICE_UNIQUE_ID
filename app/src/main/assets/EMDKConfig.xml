@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><!--This is an auto generated document. Changes to this document may cause incorrect behavior.--><wap-provisioningdoc>
+  <characteristic type="ProfileInfo">
+    <parm name="created_wizard_version" value="9.1.0"/>
+  </characteristic>
+  <characteristic type="Profile">
+    <parm name="ProfileName" value="ACCESSMGR_SERIAL"/>
+    <parm name="ModifiedDate" value="2021-10-12 17:49:10"/>
+    <parm name="TargetSystemVersion" value="10.1"/>
+    <characteristic type="AccessMgr" version="10.1">
+      <parm name="emdk_name" value=""/>
+      <parm name="ServiceAccessAction" value="4"/>
+      <parm name="ServiceIdentifier" value="content://oem_info/oem.zebra.secure/build_serial"/>
+      <parm name="CallerPackageName" value="com.ndzl.uniqueids"/>
+      <parm name="CallerSignature" value="MIIC5DCCAcwCAQEwDQYJKoZIhvcNAQEFBQAwNzEWMBQGA1UEAwwNQW5kcm9pZCBEZWJ1ZzEQMA4GA1UECgwHQW5kcm9pZDELMAkGA1UEBhMCVVMwIBcNMjAwNzMxMTMwMDE4WhgPMjA1MDA3MjQxMzAwMThaMDcxFjAUBgNVBAMMDUFuZHJvaWQgRGVidWcxEDAOBgNVBAoMB0FuZHJvaWQxCzAJBgNVBAYTAlVTMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxND+wSW1SwqjgfO+I9cBQ9VoBaZGwVxiutefqhTwZ4c8w258hCCjmfIcSPQQWf7K8Pd4JOGpq5vBpyf4vTPHkR2WLXsEqrMSwDFTLEccYuVF1L9UUfgNdVkiuE0fqepSwathKAUsuz+DdlVfsruxH91NsGmTQM9y+B2lJvBYWsPqrw46D0sM7ysM4Fo3mJsGLYjv9FKVKtpwaCUZ+doLmyTvMti/bQqJRrNzG9A/M9dqRWw6IYFGreqhZL9SmpeQRCJK/NF5203Hpr+FL9uBwoYPrtU9hgJFEdfrTLgNVIXNXOsPGPSNfCyU2V723bZH8atjx9o5Xs0JmONJkhrtewIDAQABMA0GCSqGSIb3DQEBBQUAA4IBAQCCN1l7L6mHhJScDXL5n9S5JFRR37VXZysEQ8vI91tiENYjk0FuJi9CCoskQfaVxHdGiCd+B2QiYI5CHMU4yo6bIdJciQj20aC/6G6ySzn/bcRr25wIfsbZpigzpn+QQ+7scCiUvEi43sBgUIK7hP1P+O9nIOgV5nxNs/jC8ePGzqf0Sm0G520Pnsn2RP00ALNL6K6ZIdZjx3Xum9PguBzhXexQe9RiuQyifSwAWTkBIcS8RLVL4FqxOSEktmDr1GFphp6JYtrKMUtKeaPq3OnzoXIqET0Qf+/K1B2dOIjf3y5VhDuySBjqm+xheLjTFZfZInFSLYSxdlo1GL2UaEJs"/>
+    </characteristic>
+  </characteristic>
+</wap-provisioningdoc>
