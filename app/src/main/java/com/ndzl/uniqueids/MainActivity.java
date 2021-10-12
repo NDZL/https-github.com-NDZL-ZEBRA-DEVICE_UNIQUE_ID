@@ -62,16 +62,11 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
         }, 2000);
 
 
-       // EMDKResults results = EMDKManager.getEMDKManager(getApplicationContext(), this);
-
-        String serialNumber = RetrieveOEMInfo(Uri.parse(URI_SERIAL),  false);       //  Build.getSerial()
-        Log.i("UniqueIDsService", "ON CREATE SERIAL NUMBER="+serialNumber);
-
+        EMDKResults results = EMDKManager.getEMDKManager(getApplicationContext(), this);
 
         service_is = new Intent(this, UniqueIDsService.class);
         service_is.putExtra("WORDS_TO_SAY", "HEY NIK!");
         service_is.putExtra("LANGUAGE", "ITA");
-        //startService(service_is);
         UniqueIDsService.enqueueWork(this, service_is);
 
 
@@ -100,6 +95,11 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
 
             final EMDKResults results = profileManager.processProfileAsync(profileToBeApplied,
                     ProfileManager.PROFILE_FLAG.SET, modifyData);
+
+            //the EMDK PROFILE CONTAINS THE PEM B64 CERTIFICATE OF THE "DEBUG" VERSION OF THIS APK
+            //TO EXPORT THE CERTIFICATE IN BINARY PEM
+            //C:\Users\CXNT48\.android> "C:\Program Files\Java\jdk-15.0.1\bin\keytool" -exportcert -alias androiddebugkey -keystore debug.keystore -file debug.crt
+            //IF THE APK WILL BE SIGNED with a different key, THE PROFILE CONTENT MUST CHANGE ACCORDINGLY
 
             String sty = results.statusCode.toString();
         }

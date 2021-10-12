@@ -12,6 +12,7 @@ import android.content.pm.SigningInfo;
 import android.util.Log;
 
 
+import java.util.Base64;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,6 +47,12 @@ public class UniqueIDsService extends JobIntentService {
         for (Signature sig : sigs)
         {
             Log.d("UniqueIDsService", "Signature : " + sig.toCharsString() + " Length: " + sig.toCharsString().length());
+            //THE BINARY VERSION OF THIS HEX SIGNATURE CAN BE PASTED INTO EMDK ACCESS MANAGER
+            // <parm name="CallerSignature" value="MIIC5DCCAcwCAQEwDQYJKo...
+            // use https://holtstrom.com/michael/tools/hextopem.php to convert or any other service
+            //byte[] encodedHexB64 = Base64.codeBase64(decodedHex);  ??
+
+
         }
     }
 }
