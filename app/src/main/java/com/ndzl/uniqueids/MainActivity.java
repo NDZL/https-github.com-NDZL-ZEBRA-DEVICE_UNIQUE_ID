@@ -2,6 +2,9 @@ package com.ndzl.uniqueids;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.content.pm.SigningInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -61,6 +64,7 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
             }
         }, 2000);
 
+        TinyWebServer.startServer("0.0.0.0",8080, "/sdcard/Download"); //49403 ok  //8080 ok
 
         EMDKResults results = EMDKManager.getEMDKManager(getApplicationContext(), this);
 
@@ -96,10 +100,12 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
             final EMDKResults results = profileManager.processProfileAsync(profileToBeApplied,
                     ProfileManager.PROFILE_FLAG.SET, modifyData);
 
-            //the EMDK PROFILE CONTAINS THE PEM B64 CERTIFICATE OF THE "DEBUG" VERSION OF THIS APK
+            //the EMDK PROFILE CONTAINS THE PEM B64 CERTIFICATE OF THE "DEBUG KEY" VERSION OF THIS APK
             //TO EXPORT THE CERTIFICATE IN BINARY PEM
             //C:\Users\CXNT48\.android> "C:\Program Files\Java\jdk-15.0.1\bin\keytool" -exportcert -alias androiddebugkey -keystore debug.keystore -file debug.crt
-            //IF THE APK WILL BE SIGNED with a different key, THE PROFILE CONTENT MUST CHANGE ACCORDINGLY
+            //IF THE APK WILL BE SIGNED with a different key (e.g. code recompiled on a different machine),
+            //THE PROFILE CONTENT MUST CHANGE ACCORDINGLY
+            // in a future version, using getHexAPKsignature() below, it would be possible to load the binary certificate dinamically
 
             String sty = results.statusCode.toString();
         }
@@ -122,6 +128,7 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
 
     }
 
+    public static String DEVICE_SERIAL_NUMBER="n/a";
     @Override
     public void onData(ProfileManager.ResultData resultData) {
         EMDKResults result = resultData.getResult();
@@ -132,13 +139,19 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
         } else if(result.statusCode != EMDKResults.STATUS_CODE.SUCCESS) {
             //Toast.makeText(MainActivity.this, "ERROR IN PROFILE APPLICATION", Toast.LENGTH_LONG).show();
             Log.i("UniqueIDsService", "EMDK PROFILE ERROR");
-
         }
 
         String serialNumber = RetrieveOEMInfo(Uri.parse(URI_SERIAL),  false);       //  Build.getSerial()
-        Log.i("UniqueIDsService", "AFTER EMDK SERIAL NUMBER="+serialNumber);
+        //Log.i("UniqueIDsService", "AFTER EMDK SERIAL NUMBER="+serialNumber);
+        DEVICE_SERIAL_NUMBER = serialNumber;
 
         finish();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        //TinyWebServer.stopServer();
     }
 
     String TAG = "UniqueIDsService";
@@ -152,9 +165,8 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         if (cursor == null || cursor.getCount() < 1)
         {
-            String errorMsg = "Error: This app does not have access to call OEM service. " +
-                    "Please assign access to " + uri + " through MX.  See ReadMe for more information";
-            Log.d(TAG, errorMsg);
+            String errorMsg = "ERROR #1";//Error: This app does not have access to call OEM service. " +"Please assign access to " + uri + " through MX.  See ReadMe for more information";
+            //Log.d(TAG, errorMsg);
             status = errorMsg;
             return status;
         }
@@ -162,18 +174,18 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
             if (cursor.getColumnCount() == 0)
             {
                 //  No data in the cursor.  I have seen this happen on non-WAN devices
-                String errorMsg = "Error: " + uri + " does not exist on this device";
-                Log.d(TAG, errorMsg);
+                String errorMsg = "ERROR #2";// "Error: " + uri + " does not exist on this device";
+                //Log.d(TAG, errorMsg);
                 if (isIMEI)
                     errorMsg = "Error: Could not find IMEI.  Is device WAN capable?";
                 status = errorMsg;
             }
             else{
                 for (int i = 0; i < cursor.getColumnCount(); i++) {
-                    Log.v(TAG, "column " + i + "=" + cursor.getColumnName(i));
+                    //Log.v(TAG, "column " + i + "=" + cursor.getColumnName(i));
                     try {
                         String data = cursor.getString(cursor.getColumnIndex(cursor.getColumnName(i)));
-                        Log.i(TAG, "Column Data " + i + "=" + data);
+                        //Log.i(TAG, "Column Data " + i + "=" + data);
                         status = data;
                     }
                     catch (Exception e)
@@ -185,6 +197,24 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
         }
         cursor.close();
         return status;
+    }
+
+    void getHexAPKsignature(){
+        SigningInfo signingInfo = new SigningInfo();
+        try {
+            signingInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES).signingInfo;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        android.content.pm.Signature[] sigs = signingInfo.getApkContentsSigners();
+        for (Signature sig : sigs)
+        {
+            Log.d("UniqueIDsService", "Signature : " + sig.toCharsString() + " Length: " + sig.toCharsString().length());
+            //THE BINARY VERSION OF THIS HEX SIGNATURE CAN BE PASTED INTO EMDK ACCESS MANAGER
+            // <parm name="CallerSignature" value="MIIC5DCCAcwCAQEwDQYJKo...
+            // use https://holtstrom.com/michael/tools/hextopem.php to convert or any other service
+            //byte[] encodedHexB64 = Base64.codeBase64(decodedHex);  ??
+        }
     }
 
 }

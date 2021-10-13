@@ -28,6 +28,7 @@ public class UniqueIDsService extends JobIntentService {
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
         Log.i("UniqueIDsService", "Executing work: " + intent);
+        /*
         tim = new Timer("JOBSERVICE", false);
         tim.schedule(new TimerTask() {
             @Override
@@ -36,24 +37,10 @@ public class UniqueIDsService extends JobIntentService {
             }
         }, 3000);
 
-
-        SigningInfo signingInfo = new SigningInfo();
-        try {
-            signingInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES).signingInfo;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        android.content.pm.Signature[] sigs = signingInfo.getApkContentsSigners();
-        for (Signature sig : sigs)
-        {
-            Log.d("UniqueIDsService", "Signature : " + sig.toCharsString() + " Length: " + sig.toCharsString().length());
-            //THE BINARY VERSION OF THIS HEX SIGNATURE CAN BE PASTED INTO EMDK ACCESS MANAGER
-            // <parm name="CallerSignature" value="MIIC5DCCAcwCAQEwDQYJKo...
-            // use https://holtstrom.com/michael/tools/hextopem.php to convert or any other service
-            //byte[] encodedHexB64 = Base64.codeBase64(decodedHex);  ??
+         */
 
 
-        }
+
     }
 }
 
