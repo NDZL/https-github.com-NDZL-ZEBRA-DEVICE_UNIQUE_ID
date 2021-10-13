@@ -9,4 +9,5 @@ or to
 http://--deviceIP--:8080/serial  from a remote location  
 Some improvements to the app structure yet to be done  
 ![image](https://user-images.githubusercontent.com/11386676/137154402-27163e47-7fce-41d0-bc6a-7db4b8fe76b9.png)
-
+  
+![image](https://user-images.githubusercontent.com/11386676/137155280-c31e49ce-ed9d-4518-b7d1-e77b206aa7c9.png)
