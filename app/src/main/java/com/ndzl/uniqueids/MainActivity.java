@@ -64,7 +64,6 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
             }
         }, 2000);
 
-        TinyWebServer.startServer("0.0.0.0",8080, "/sdcard/Download"); //49403 ok  //8080 ok
 
         EMDKResults results = EMDKManager.getEMDKManager(getApplicationContext(), this);
 
@@ -75,7 +74,7 @@ public class MainActivity extends Activity implements EMDKManager.EMDKListener, 
 
 
         Toast.makeText(getApplicationContext(), "<UniqueID Service app>",Toast.LENGTH_SHORT).show();
-        //finish(); //serve! non rimuovere - fa sparire l'activity dalla recent apps list
+        finish(); //serve! non rimuovere - fa sparire l'activity dalla recent apps list
 
     }
 

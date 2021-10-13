@@ -27,17 +27,12 @@ public class UniqueIDsService extends JobIntentService {
     Timer tim;
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
-        Log.i("UniqueIDsService", "Executing work: " + intent);
-        /*
-        tim = new Timer("JOBSERVICE", false);
-        tim.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Log.i("UniqueIDsService", "TIMER CALLED");
-            }
-        }, 3000);
 
-         */
+        int TWS_PORT = 8080;
+        Log.i("UniqueIDsService", "Staring TinyWebServer - Get Device Serial Number on http://localhost:"+TWS_PORT+"/serial");
+
+        TinyWebServer.startServer("0.0.0.0",TWS_PORT, "/sdcard/Download"); //49403 ok  //8080 ok
+
 
 
 
